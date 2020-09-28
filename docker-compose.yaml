@@ -8,3 +8,6 @@ services:
       - ./:/workspace
     command:
       - repository-watching.py
+    environment:
+      GITHUB_PASSWORD: (set in docker-compose.override.yaml)
+      GITHUB_USERNAME: (set in docker-compose.override.yaml)
