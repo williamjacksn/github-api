@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   repository-watching:
-    image: docker.pkg.github.com/williamjacksn/github-api/github-api
+    image: ghcr.io/williamjacksn/github-api
     working_dir: /workspace
     volumes:
       - ./:/workspace
