@@ -1,13 +1,11 @@
 version: '3.8'
 
 services:
-  repository-watching:
+  github-api:
     image: ghcr.io/williamjacksn/github-api
     working_dir: /workspace
     volumes:
       - ./:/workspace
-    command:
-      - repository-watching.py
     environment:
       GITHUB_PASSWORD: (set in docker-compose.override.yaml)
       GITHUB_USERNAME: (set in docker-compose.override.yaml)
