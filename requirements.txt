@@ -1,2 +1,2 @@
 --extra-index-url https://alpine-wheels.github.io/index
-requests==2.25.1
+requests==2.26.0
