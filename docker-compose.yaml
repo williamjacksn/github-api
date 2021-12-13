@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   github-api:
     image: ghcr.io/williamjacksn/github-api
