@@ -7,3 +7,12 @@ services:
     environment:
       GITHUB_PASSWORD: (set in docker-compose.override.yaml)
       GITHUB_USERNAME: (set in docker-compose.override.yaml)
+
+  shell:
+    entrypoint:
+      - /bin/sh
+    image: ghcr.io/williamjacksn/github-api
+    init: true
+    volumes:
+      - ./:/home/python/github-api
+    working_dir: /home/python/github-api
