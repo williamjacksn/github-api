@@ -9,6 +9,7 @@ COPY --chown=python:python requirements.txt /home/python/github-api/requirements
 RUN /home/python/venv/bin/pip install --no-cache-dir --requirement /home/python/github-api/requirements.txt
 
 ENV PATH="/home/python/venv/bin:${PATH}" \
+    PYTHONDONTWRITEBYTECODE="1" \
     PYTHONUNBUFFERED="1" \
     TZ="Etc/UTC"
 
