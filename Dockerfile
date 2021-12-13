@@ -3,7 +3,7 @@ FROM python:3.10.1-alpine3.15
 RUN /usr/sbin/adduser -g python -D python
 
 USER python
-RUN /use/local/bin/python -m venv /home/python/venv
+RUN /usr/local/bin/python -m venv /home/python/venv
 
 COPY --chown=python:python requirements.txt /home/python/github-api/requirements.txt
 RUN /home/python/venv/bin/pip install --no-cache-dir --requirement /home/python/github-api/requirements.txt
