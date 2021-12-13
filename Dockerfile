@@ -1,10 +1,18 @@
 FROM python:3.10.1-alpine3.15
 
-COPY requirements.txt /github-api/requirements.txt
+RUN /usr/sbin/adduser -g python -D python
 
-RUN /usr/local/bin/pip install --no-cache-dir --requirement /github-api/requirements.txt
+USER python
+RUN /use/local/bin/python -m venv /home/python/venv
 
-ENV PYTHONUNBUFFERED="1" \
+COPY --chown=python:python requirements.txt /home/python/github-api/requirements.txt
+RUN /home/python/venv/bin/pip install --no-cache-dir --requirement /home/python/github-api/requirements.txt
+
+ENV PATH="/home/python/venv/bin:${PATH}" \
+    PYTHONUNBUFFERED="1" \
     TZ="Etc/UTC"
 
-ENTRYPOINT ["/usr/local/bin/python"]
+LABEL org.opencontainers.image.authors="William Jackson <william@subtlecoolness.com>" \
+      org.opencontainers.image.source="https://github.com/williamjacksn/github-api"
+
+ENTRYPOINT ["/home/python/venv/bin/python"]
