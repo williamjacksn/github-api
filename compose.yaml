@@ -1,18 +1,7 @@
 services:
   github-api:
-    image: ghcr.io/williamjacksn/github-api
-    working_dir: /workspace
-    volumes:
-      - ./:/workspace
     environment:
-      GITHUB_PASSWORD: (set in docker-compose.override.yaml)
-      GITHUB_USERNAME: (set in docker-compose.override.yaml)
-
-  pip-compile:
-    entrypoint:
-      - /bin/sh
-      - -c
-      - /home/python/venv/bin/pip install pip-tools && /home/python/venv/bin/pip-compile
+      GITHUB_TOKEN: (set in compose.override.yaml)
     image: ghcr.io/williamjacksn/github-api
     init: true
     volumes:
