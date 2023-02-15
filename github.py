@@ -4,15 +4,36 @@ import requests
 
 class GitHubClient:
     def __init__(self):
-        self.username = os.getenv('GITHUB_USERNAME')
+        self.token = os.getenv('GITHUB_TOKEN')
         self.s = requests.Session()
-        self.s.auth = requests.auth.HTTPBasicAuth(self.username, os.getenv('GITHUB_PASSWORD'))
-        self.s.headers.update({'accept': 'application/vnd.github.v3+json'})
+        self.s.headers.update({
+            'accept': 'application/vnd.github+json',
+            'authorization': f'Bearer {self.token}',
+            'x-github-api-version': '2022-11-28',
+        })
 
-    def call(self, url: str):
-        response = self.s.get(url)
+    def _get(self, url: str, params: dict= None):
+        response = self.s.get(url, params=params)
         response.raise_for_status()
         return response.json()
+
+    def get_releases(self, repo: str):
+        url = f'https://api.github.com/repos/{repo}/releases'
+        params = {
+            'page': 1,
+            'per_page': 100,
+        }
+        has_more = True
+        while has_more:
+            response = self._get(url, params)
+            yield from response
+            if response:
+                params.update({
+                    'page': params.get('page') + 1
+                })
+            else:
+                has_more = False
+
 
     def get_repositories(self):
         url = 'https://api.github.com/user/repos'
