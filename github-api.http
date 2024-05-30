@@ -1,3 +1,27 @@
+### get-repo
+GET https://api.github.com/repos/{{repo}}
+Accept: application/vnd.github+json
+Authorization: Bearer {{token}}
+X-GitHub-Api-Version: 2022-11-28
+
+### get-actions-permissions-workflow
+GET https://api.github.com/repos/{{repo}}/actions/permissions/workflow
+Accept: application/vnd.github+json
+Authorization: Bearer {{token}}
+X-GitHub-Api-Version: 2022-11-28
+
+### put-actions-permissions-workflow
+PUT https://api.github.com/repos/{{repo}}/actions/permissions/workflow
+Accept: application/vnd.github+json
+Authorization: Bearer {{token}}
+Content-Type: application/json
+X-GitHub-Api-Version: 2022-11-28
+
+{
+  "default_workflow_permissions": "read",
+  "can_approve_pull_request_reviews": false
+}
+
 ### get-branches
 GET https://api.github.com/repos/{{repo}}/branches
 Accept: application/vnd.github+json

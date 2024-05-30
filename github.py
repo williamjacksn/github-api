@@ -17,6 +17,23 @@ class GitHubClient:
         response.raise_for_status()
         return response.json()
 
+    def _put(self, url: str, json_data: dict):
+        response = self.s.put(url, json=json_data)
+        response.raise_for_status()
+
+    def get_actions_permissions_workflow(self, repo: str):
+        url = f'https://api.github.com/repos/{repo}/actions/permissions/workflow'
+        response = self._get(url)
+        return response
+
+    def set_actions_permissions_workflow(self, repo: str, default_workflow_permissions: str, can_approve_pull_request_reviews: bool):
+        url = f'https://api.github.com/repos/{repo}/actions/permissions/workflow'
+        json_data = {
+            'default_workflow_permissions': default_workflow_permissions,
+            'can_approve_pull_request_reviews': can_approve_pull_request_reviews,
+        }
+        self._put(url, json_data)
+
     def get_branches(self, repo: str):
         url = f'https://api.github.com/repos/{repo}/branches'
         response = self._get(url)
