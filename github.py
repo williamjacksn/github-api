@@ -17,6 +17,11 @@ class GitHubClient:
         response.raise_for_status()
         return response.json()
 
+    def get_branches(self, repo: str):
+        url = f'https://api.github.com/repos/{repo}/branches'
+        response = self._get(url)
+        yield from response
+
     def get_releases(self, repo: str):
         url = f'https://api.github.com/repos/{repo}/releases'
         params = {
