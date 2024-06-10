@@ -12,17 +12,14 @@ on:
       - published
   workflow_dispatch:
 
-permissions:
-  contents: read
-  packages: write
-
 env:
   image_name: ghcr.io/${{ github.repository }}
 
 jobs:
-
   build:
     name: Build the container image
+    permissions:
+      packages: write
     runs-on: ubuntu-latest
     steps:
 
