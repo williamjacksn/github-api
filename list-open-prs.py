@@ -46,7 +46,7 @@ def main():
     if total_prs == 1:
         pr_plural = ""
     repo_plural = "ies"
-    if len(repos_with_prs) == 0:
+    if len(repos_with_prs) == 1:
         repo_plural = "y"
     print(
         f"Summary: {total_prs} open pull request{pr_plural} across {len(repos_with_prs)} repositor{repo_plural}"
