@@ -1,10 +1,13 @@
 import os
 from collections.abc import Iterator
+from typing import cast
 
 import httpx
 
 
 class GitHubClient:
+    _current_user_login: str = ""
+
     def __init__(self) -> None:
         self.token = os.getenv("GITHUB_TOKEN")
         self.s = httpx.Client()
@@ -82,3 +85,11 @@ class GitHubClient:
         response = self.s.get(url)
         response.raise_for_status()
         yield from response.json().get("secrets", [])
+
+    @property
+    def username(self) -> str:
+        if self._current_user_login == "":
+            url = "https://api.github.com/user"
+            response = cast(dict, self._get(url))
+            self._current_user_login = response["login"]
+        return self._current_user_login
