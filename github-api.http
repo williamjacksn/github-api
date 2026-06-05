@@ -1,3 +1,7 @@
+### get-current-user
+GET https://api.github.com/user
+Authorization: Bearer {{token}}
+
 ### list-repos
 GET https://api.github.com/user/repos
 Authorization: Bearer {{token}}
