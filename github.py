@@ -1,11 +1,10 @@
 import os
-import requests
-
+import httpx
 
 class GitHubClient:
     def __init__(self):
         self.token = os.getenv("GITHUB_TOKEN")
-        self.s = requests.Session()
+        self.s = httpx.Client()
         self.s.headers.update(
             {
                 "accept": "application/vnd.github+json",
