@@ -5,10 +5,8 @@ def main() -> None:
     client = github.GitHubClient()
     for repository in client.get_repositories():
         subscribed = False
-        subscribers_url = repository.get("subscribers_url")
-        subscribers = client._get(subscribers_url)
-        for subscriber in subscribers:
-            if subscriber.get("login") == client.username:
+        for subscriber in client.get_subscribers(repository["full_name"]):
+            if subscriber["login"] == client.username:
                 subscribed = True
                 break
         if not subscribed:

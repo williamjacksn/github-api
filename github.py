@@ -86,6 +86,11 @@ class GitHubClient:
         response.raise_for_status()
         yield from response.json().get("secrets", [])
 
+    def get_subscribers(self, repo_full_name: str) -> Iterator[dict]:
+        url = f"https://api.github.com/repos/{repo_full_name}/subscribers"
+        response = cast(list[dict], self._get(url))
+        yield from response
+
     @property
     def username(self) -> str:
         if self._current_user_login == "":
