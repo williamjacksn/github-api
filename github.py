@@ -30,7 +30,7 @@ class GitHubClient:
 
     def get_actions_permissions_workflow(self, repo: str) -> dict:
         url = f"https://api.github.com/repos/{repo}/actions/permissions/workflow"
-        response = self._get(url)
+        response = cast(dict, self._get(url))
         return response
 
     def set_actions_permissions_workflow(
