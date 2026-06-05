@@ -1,8 +1,11 @@
 import os
+from collections.abc import Iterator
+
 import httpx
 
+
 class GitHubClient:
-    def __init__(self):
+    def __init__(self) -> None:
         self.token = os.getenv("GITHUB_TOKEN")
         self.s = httpx.Client()
         self.s.headers.update(
@@ -13,16 +16,16 @@ class GitHubClient:
             }
         )
 
-    def _get(self, url: str, params: dict = None):
+    def _get(self, url: str, params: dict | None = None) -> list | dict:
         response = self.s.get(url, params=params)
         response.raise_for_status()
         return response.json()
 
-    def _put(self, url: str, json_data: dict):
+    def _put(self, url: str, json_data: dict) -> None:
         response = self.s.put(url, json=json_data)
         response.raise_for_status()
 
-    def get_actions_permissions_workflow(self, repo: str):
+    def get_actions_permissions_workflow(self, repo: str) -> dict:
         url = f"https://api.github.com/repos/{repo}/actions/permissions/workflow"
         response = self._get(url)
         return response
@@ -32,7 +35,7 @@ class GitHubClient:
         repo: str,
         default_workflow_permissions: str,
         can_approve_pull_request_reviews: bool,
-    ):
+    ) -> None:
         url = f"https://api.github.com/repos/{repo}/actions/permissions/workflow"
         json_data = {
             "default_workflow_permissions": default_workflow_permissions,
@@ -40,12 +43,12 @@ class GitHubClient:
         }
         self._put(url, json_data)
 
-    def get_branches(self, repo: str):
+    def get_branches(self, repo: str) -> Iterator[dict]:
         url = f"https://api.github.com/repos/{repo}/branches"
         response = self._get(url)
         yield from response
 
-    def get_releases(self, repo: str):
+    def get_releases(self, repo: str) -> Iterator[dict]:
         url = f"https://api.github.com/repos/{repo}/releases"
         params = {
             "page": 1,
@@ -60,7 +63,7 @@ class GitHubClient:
             else:
                 has_more = False
 
-    def get_repositories(self):
+    def get_repositories(self) -> Iterator[dict]:
         url = "https://api.github.com/user/repos"
         while url is not None:
             response = self.s.get(url)
@@ -74,7 +77,7 @@ class GitHubClient:
                     url = link.split(";")[0].strip("<>")
                     break
 
-    def get_secrets(self, repo_full_name):
+    def get_secrets(self, repo_full_name: str) -> Iterator[dict]:
         url = f"https://api.github.com/repos/{repo_full_name}/actions/secrets"
         response = self.s.get(url)
         response.raise_for_status()

@@ -1,7 +1,7 @@
 import github
 
 
-def main():
+def main() -> None:
     client = github.GitHubClient()
     for repository in client.get_repositories():
         subscribed = False

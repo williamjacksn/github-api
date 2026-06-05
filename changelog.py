@@ -1,15 +1,19 @@
 import argparse
 import datetime
+
 import github
 
 
-def parse_args():
+class Args:
+    repo: str
+
+def parse_args() -> Args:
     parser = argparse.ArgumentParser()
     parser.add_argument("repo")
-    return parser.parse_args()
+    return parser.parse_args(namespace=Args())
 
 
-def print_release_info(release_data: dict):
+def print_release_info(release_data: dict) -> None:
     version = release_data.get("tag_name")
     print(f"# {version}\n")
     date = datetime.datetime.strptime(
@@ -24,7 +28,7 @@ def print_release_info(release_data: dict):
         print(f"{notes}\n")
 
 
-def main():
+def main() -> None:
     args = parse_args()
     gh = github.GitHubClient()
     for release in gh.get_releases(args.repo):

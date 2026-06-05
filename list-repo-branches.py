@@ -1,7 +1,7 @@
 import github
 
 
-def main():
+def main() -> None:
     client = github.GitHubClient()
     for repository in client.get_repositories():
         repo_full_name = repository.get("full_name")

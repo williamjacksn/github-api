@@ -1,7 +1,7 @@
 import github
 
 
-def main():
+def main() -> None:
     gh = github.GitHubClient()
 
     print("Fetching repositories...")
@@ -49,7 +49,8 @@ def main():
     if len(repos_with_prs) == 1:
         repo_plural = "y"
     print(
-        f"Summary: {total_prs} open pull request{pr_plural} across {len(repos_with_prs)} repositor{repo_plural}"
+        f"Summary: {total_prs} open pull request{pr_plural} "
+        f"across {len(repos_with_prs)} repositor{repo_plural}"
     )
     print("=" * 60)
 
