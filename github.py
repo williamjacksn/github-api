@@ -62,7 +62,7 @@ class GitHubClient:
             response = self._get(url, params)
             yield from response
             if response:
-                params.update({"page": params.get("page") + 1})
+                params.update({"page": params["page"] + 1})
             else:
                 has_more = False
 
