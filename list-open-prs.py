@@ -1,3 +1,5 @@
+import httpx
+
 import github
 
 
@@ -37,7 +39,7 @@ def main() -> None:
                     print(f"    Author: {pr_author} | Created: {created_at}")
                     print(f"    URL: {pr_url}")
                 print()
-        except Exception as e:
+        except httpx.HTTPError as e:
             print(f"  Error fetching PRs for {full_name}: {e}")
 
     print()
